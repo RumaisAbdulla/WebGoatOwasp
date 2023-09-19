@@ -32,16 +32,12 @@ pipeline {
 			}
 		}
 		
-		// stage('OWASP SCAN') {
-		// 	steps {
-		// 		dependencyCheck additionalArguments:  ''' 
-  //                   -o './'
-  //                   -s './'
-  //                   -f 'ALL' 
-  //                   --prettyPrint''', odcInstallation: 'dependency-check'
-		// 		dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-		// 	}
-		// }
+		stage('OWASP SCAN') {
+			steps {
+				dependencyCheck additionalArguments:  '--scan traget/', odcInstallation: 'dependency-check'
+				dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+			}
+		}
 		
     }
 }
