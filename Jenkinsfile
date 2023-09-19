@@ -5,7 +5,13 @@ pipeline {
 		
 		stage('COMPILE') {
 			steps {
-				bat 'mvn clean compile -DskipTests'
+				bat 'mvn clean compile'
+			}
+		}
+        
+        stage('TEST') {
+			steps {
+				bat 'mvn test '
 			}
 		}
         
