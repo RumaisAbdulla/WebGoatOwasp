@@ -37,8 +37,6 @@ import org.owasp.webgoat.lessons.challenges.challenge1.ImageServlet;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 
 /**
  * @author nbaars
@@ -47,8 +45,7 @@ import org.springframework.core.env.Environment;
 @ExtendWith(MockitoExtension.class)
 class Assignment1Test extends AssignmentEndpointTest {
 
-  @Autowired
-  private Environment environment;
+
 
   private MockMvc mockMvc;
 
