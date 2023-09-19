@@ -25,7 +25,7 @@ pipeline {
 				dependencyCheck additionalArguments:  ''' 
                     -o './'
                     -s './'
-                    -f 'HTML' 
+                    -f 'ALL' 
                     --prettyPrint''', odcInstallation: 'dependency-check'
 				dependencyCheckPublisher pattern: 'dependency-check-report.xml'
 			}
