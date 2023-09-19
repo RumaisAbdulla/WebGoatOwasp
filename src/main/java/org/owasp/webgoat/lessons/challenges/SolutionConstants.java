@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
  */
 public interface SolutionConstants {
 
-  private final SolutionConstant NewSolutionConstant;
+  private final SolutionConstant NewSolutionConstant = SolutionConstant();
 
   // TODO should be random generated when starting the server
   String PASSWORD = "!!webgoat_admin_1234!!";
