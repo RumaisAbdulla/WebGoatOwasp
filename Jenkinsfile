@@ -1,30 +1,31 @@
 pipeline {
-    agent any
-
-    stages {
-      
-        stage('Build') {
-            steps {
-                        bat 'mvn package -DskipTests'
-            }
-        }
+	agent any
+	
+	stages {
+		
+		stage('COMPILE') {
+			steps {
+				bat 'mvn clean compile -DskipTests'
+			}
+		}
         
-        stage('SonarQube Analysis') {
+        stage('SONARQUBE ANALYSIS') {
             steps{
                 script{
-                     def scannerHome = tool 'sonar-local';
-                     withSonarQubeEnv() {
-                    bat "${scannerHome}/bin/sonar-scanner -Dsonar.projectName=WebgoatNew -Dsonar.projectKey=WebgoatNew -Dsonar.java.binaries=target/classes"
-                    }
+					def scannerHome = tool 'sonar-local';
+					withSonarQubeEnv() {
+						bat "${scannerHome}/bin/sonar-scanner -Dsonar.projectName=WebgoatNew -Dsonar.projectKey=WebgoatNew -Dsonar.java.binaries=target/classes"
+					}
                 }
             }
         }
-
-        stage('OWASP Dependency-Check Vulnerabilities') {
-      steps {
-        dependencyCheck additionalArguments: '--scan ./ --format HTML', odcInstallation: 'dependency-check'
-        dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-      }
-    }
+		
+		stage('OWASP SCAN') {
+			steps {
+				dependencyCheck additionalArguments: '--scan ./ --format HTML', odcInstallation: 'dependency-check'
+				dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+			}
+		}
+		
     }
 }
