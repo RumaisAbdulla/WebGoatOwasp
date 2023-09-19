@@ -3,9 +3,9 @@ pipeline {
 	
 	stages {
 		
-		stage('BUILD') {
+		stage('COMPILE') {
 			steps {
-				bat 'mvn clean package'
+				bat 'mvn clean compile'
 			}
 		}
         
@@ -25,6 +25,12 @@ pipeline {
                 }
             }
         }
+
+        stage('BUILD') {
+			steps {
+				bat 'mvn clean package'
+			}
+		}
 		
 		// stage('OWASP SCAN') {
 		// 	steps {
