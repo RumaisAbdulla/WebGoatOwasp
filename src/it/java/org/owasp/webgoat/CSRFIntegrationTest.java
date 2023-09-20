@@ -24,13 +24,13 @@ import org.owasp.webgoat.container.lessons.Assignment;
 public class CSRFIntegrationTest extends IntegrationTest {
 
   private static final String trickHTML3 =
-      "<!DOCTYPE html><html><body><form action=\"WEBGOATURL\" method=\"POST\">\n"
+      MyConstants.HTML_START
           + "<input type=\"hidden\" name=\"csrf\" value=\"thisisnotchecked\"/>\n"
           + "<input type=\"submit\" name=\"submit\" value=\"assignment 3\"/>\n"
-          + "</form></body></html>";
+          + MyConstants.HTML_END;
 
   private static final String trickHTML4 =
-      "<!DOCTYPE html><html><body><form action=\"WEBGOATURL\" method=\"POST\">\n"
+      MyConstants.HTML_START
           + "<input type=\"hidden\" name=\"reviewText\" value=\"hoi\"/>\n"
           + "<input type=\"hidden\" name=\"starts\" value=\"3\"/>\n"
           + "<input type=\"hidden\" name=\"validateReq\""
@@ -46,16 +46,16 @@ public class CSRFIntegrationTest extends IntegrationTest {
           + " name='{\"name\":\"WebGoat\",\"email\":\"webgoat@webgoat.org\",\"content\":\"WebGoat"
           + " is the best!!' value='\"}' />\n"
           + "<input type=\"submit\" value=\"assignment 7\"/>\n"
-          + "</form></body></html>";
+          + MyConstants.HTML_END;
 
   private static final String trickHTML8 =
-      "<!DOCTYPE html><html><body><form action=\"WEBGOATURL\" method=\"POST\">\n"
+      MyConstants.HTML_START
           + "<input type=\"hidden\" name=\"username\" value=\"csrf-USERNAME\"/>\n"
           + "<input type=\"hidden\" name=\"password\" value=\"password\"/>\n"
           + "<input type=\"hidden\" name=\"matchingPassword\" value=\"password\"/>\n"
           + "<input type=\"hidden\" name=\"agree\" value=\"agree\"/>\n"
           + "<input type=\"submit\" value=\"assignment 8\"/>\n"
-          + "</form></body></html>";
+          + MyConstants.HTML_END;
 
   private String webwolfFileDir;
 
