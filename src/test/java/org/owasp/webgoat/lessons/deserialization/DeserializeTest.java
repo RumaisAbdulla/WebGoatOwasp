@@ -67,8 +67,7 @@ class DeserializeTest extends AssignmentEndpointTest {
 
   @Test
   void wrongVersion() throws Exception {
-    String token =
-        "${{env.TOKEN}}";
+    String token = System.env.TOKEN;
     mockMvc
         .perform(MockMvcRequestBuilders.post("/InsecureDeserialization/task").param("token", token))
         .andExpect(status().isOk())
