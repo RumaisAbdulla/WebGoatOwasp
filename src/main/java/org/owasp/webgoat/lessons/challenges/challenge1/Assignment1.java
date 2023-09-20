@@ -1,6 +1,6 @@
 package org.owasp.webgoat.lessons.challenges.challenge1;
 
-// import static org.owasp.webgoat.lessons.challenges.SolutionConstants.PASSWORD;
+import static org.owasp.webgoat.lessons.challenges.SolutionConstants.PASSWORD;
 
 import javax.servlet.http.HttpServletRequest;
 import org.owasp.webgoat.container.assignments.AssignmentEndpoint;
@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 
 /**
  * ************************************************************************************************
@@ -47,18 +45,14 @@ import org.springframework.core.env.Environment;
 @RestController
 public class Assignment1 extends AssignmentEndpoint {
 
-  @Autowired
-    private Environment environment;
-
   @PostMapping("/challenge/1")
   @ResponseBody
   public AttackResult completed(
       @RequestParam String username, @RequestParam String password, HttpServletRequest request) {
-    String adminPassword = environment.getProperty("webgoat.admin.password");
     boolean ipAddressKnown = true;
     boolean passwordCorrect =
         "admin".equals(username)
-            && adminPassword
+            && PASSWORD
                 .replace("1234", String.format("%04d", ImageServlet.PINCODE))
                 .equals(password);
     if (passwordCorrect && ipAddressKnown) {

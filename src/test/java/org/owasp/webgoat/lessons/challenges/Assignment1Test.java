@@ -37,15 +37,12 @@ import org.owasp.webgoat.lessons.challenges.challenge1.ImageServlet;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-
 /**
  * @author nbaars
  * @since 5/2/17.
  */
 @ExtendWith(MockitoExtension.class)
 class Assignment1Test extends AssignmentEndpointTest {
-
-
 
   private MockMvc mockMvc;
 
@@ -61,9 +58,6 @@ class Assignment1Test extends AssignmentEndpointTest {
   void success() throws Exception {
     InetAddress addr = InetAddress.getLocalHost();
     String host = addr.getHostAddress();
-
-    String adminPassword = environment.getProperty("webgoat.admin.password");
-
     mockMvc
         .perform(
             MockMvcRequestBuilders.post("/challenge/1")
@@ -71,7 +65,7 @@ class Assignment1Test extends AssignmentEndpointTest {
                 .param("username", "admin")
                 .param(
                     "password",
-                    adminPassword.replace(
+                    SolutionConstants.PASSWORD.replace(
                         "1234", String.format("%04d", ImageServlet.PINCODE))))
         .andExpect(
             jsonPath("$.feedback", CoreMatchers.containsString("flag: " + Flag.FLAGS.get(1))))
