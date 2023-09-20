@@ -116,7 +116,7 @@ public class CSRFIntegrationTest extends IntegrationTest {
         RestAssured.given()
             .when()
             .relaxedHTTPSValidation()
-            .cookie("JSESSIONID", getWebGoatCookie())
+            .cookie(MyConstants.J_SESSIONID, getWebGoatCookie())
             .cookie("WEBWOLFSESSION", getWebWolfCookie())
             .get(webWolfUrl("/files/" + this.getUser() + "/" + htmlName))
             .then()
@@ -135,7 +135,7 @@ public class CSRFIntegrationTest extends IntegrationTest {
         RestAssured.given()
             .when()
             .relaxedHTTPSValidation()
-            .cookie("JSESSIONID", getWebGoatCookie())
+            .cookie(MyConstants.J_SESSIONID, getWebGoatCookie())
             .header("Referer", webWolfUrl("/files/fake.html"))
             .post(goatURL)
             .then()
@@ -162,7 +162,7 @@ public class CSRFIntegrationTest extends IntegrationTest {
         RestAssured.given()
             .when()
             .relaxedHTTPSValidation()
-            .cookie("JSESSIONID", getWebGoatCookie())
+            .cookie(MyConstants.J_SESSIONID, getWebGoatCookie())
             .header("Referer", webWolfUrl("/files/fake.html"))
             .formParams(params)
             .post(goatURL)
@@ -183,7 +183,7 @@ public class CSRFIntegrationTest extends IntegrationTest {
         RestAssured.given()
             .when()
             .relaxedHTTPSValidation()
-            .cookie("JSESSIONID", getWebGoatCookie())
+            .cookie(MyConstants.J_SESSIONID, getWebGoatCookie())
             .header("Referer", webWolfUrl("/files/fake.html"))
             .contentType(ContentType.TEXT)
             .body(
@@ -216,19 +216,19 @@ public class CSRFIntegrationTest extends IntegrationTest {
         RestAssured.given()
             .when()
             .relaxedHTTPSValidation()
-            .cookie("JSESSIONID", getWebGoatCookie())
+            .cookie(MyConstants.J_SESSIONID, getWebGoatCookie())
             .header("Referer", webWolfUrl("/files/fake.html"))
             .params(params)
             .post(goatURL)
             .then()
             .extract()
-            .cookie("JSESSIONID");
+            .cookie(MyConstants.J_SESSIONID);
 
     // select the lesson
     RestAssured.given()
         .when()
         .relaxedHTTPSValidation()
-        .cookie("JSESSIONID", newCookie)
+        .cookie(MyConstants.J_SESSIONID, newCookie)
         .get(url("CSRF.lesson.lesson"))
         .then()
         .statusCode(200);
@@ -238,7 +238,7 @@ public class CSRFIntegrationTest extends IntegrationTest {
         RestAssured.given()
             .when()
             .relaxedHTTPSValidation()
-            .cookie("JSESSIONID", newCookie)
+            .cookie(MyConstants.J_SESSIONID, newCookie)
             .post(url("/csrf/login"))
             .then()
             .statusCode(200)
@@ -252,7 +252,7 @@ public class CSRFIntegrationTest extends IntegrationTest {
 
     Overview[] assignments =
         RestAssured.given()
-            .cookie("JSESSIONID", getWebGoatCookie())
+            .cookie(MyConstants.J_SESSIONID, getWebGoatCookie())
             .get(url("/service/lessonoverview.mvc"))
             .then()
             .extract()
