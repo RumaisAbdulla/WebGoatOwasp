@@ -1,5 +1,6 @@
 package org.owasp.webgoat.lessons.challenges.challenge7;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Random;
  * @since 8/17/17.
  */
 public class PasswordResetLink {
-  private Random random = new Random();
+  private SecureRandom random = new SecureRandom();
   public String createPasswordReset(String username, String key) {
     if (username.equalsIgnoreCase("admin")) {
       // Admin has a fix reset link
