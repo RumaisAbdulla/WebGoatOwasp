@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.owasp.webgoat.container.SecretsApi;
 import org.owasp.webgoat.container.assignments.AssignmentEndpointTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -68,7 +69,7 @@ class DeserializeTest extends AssignmentEndpointTest {
   @Test
   void wrongVersion() throws Exception {
     String token =
-        "rO0ABXNyADFvcmcuZHVtbXkuaW5zZWN1cmUuZnJhbWV3b3JrLlZ1bG5lcmFibGVUYXNrSG9sZGVyAAAAAAAAAAECAANMABZyZXF1ZXN0ZWRFeGVjdXRpb25UaW1ldAAZTGphdmEvdGltZS9Mb2NhbERhdGVUaW1lO0wACnRhc2tBY3Rpb250ABJMamF2YS9sYW5nL1N0cmluZztMAAh0YXNrTmFtZXEAfgACeHBzcgANamF2YS50aW1lLlNlcpVdhLobIkiyDAAAeHB3DgUAAAfjCR4GIQgMLRSoeHQACmVjaG8gaGVsbG90AAhzYXlIZWxsbw";
+        SecretsApi.getSecret("dtokenwrong");
     mockMvc
         .perform(MockMvcRequestBuilders.post("/InsecureDeserialization/task").param("token", token))
         .andExpect(status().isOk())
@@ -83,7 +84,7 @@ class DeserializeTest extends AssignmentEndpointTest {
   @Test
   void expiredTask() throws Exception {
     String token =
-        "rO0ABXNyADFvcmcuZHVtbXkuaW5zZWN1cmUuZnJhbWV3b3JrLlZ1bG5lcmFibGVUYXNrSG9sZGVyAAAAAAAAAAICAANMABZyZXF1ZXN0ZWRFeGVjdXRpb25UaW1ldAAZTGphdmEvdGltZS9Mb2NhbERhdGVUaW1lO0wACnRhc2tBY3Rpb250ABJMamF2YS9sYW5nL1N0cmluZztMAAh0YXNrTmFtZXEAfgACeHBzcgANamF2YS50aW1lLlNlcpVdhLobIkiyDAAAeHB3DgUAAAfjCR4IDC0YfvNIeHQACmVjaG8gaGVsbG90AAhzYXlIZWxsbw";
+        SecretsApi.getSecret("dtokenexpiry");
     mockMvc
         .perform(MockMvcRequestBuilders.post("/InsecureDeserialization/task").param("token", token))
         .andExpect(status().isOk())
@@ -97,7 +98,7 @@ class DeserializeTest extends AssignmentEndpointTest {
   @Test
   void checkOtherObject() throws Exception {
     String token =
-        "rO0ABXQAVklmIHlvdSBkZXNlcmlhbGl6ZSBtZSBkb3duLCBJIHNoYWxsIGJlY29tZSBtb3JlIHBvd2VyZnVsIHRoYW4geW91IGNhbiBwb3NzaWJseSBpbWFnaW5l";
+        SecretsApi.getSecret("dtokencheck");
     mockMvc
         .perform(MockMvcRequestBuilders.post("/InsecureDeserialization/task").param("token", token))
         .andExpect(status().isOk())

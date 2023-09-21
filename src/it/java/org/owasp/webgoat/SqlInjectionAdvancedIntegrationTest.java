@@ -3,6 +3,7 @@ package org.owasp.webgoat;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
+import org.owasp.webgoat.container.SecretsApi;
 
 public class SqlInjectionAdvancedIntegrationTest extends IntegrationTest {
 
@@ -20,7 +21,7 @@ public class SqlInjectionAdvancedIntegrationTest extends IntegrationTest {
 
     params.clear();
     params.put("username_login", "tom");
-    params.put("password_login", "thisisasecretfortomonly");
+    params.put("password_login", SecretsApi.getSecret("tompassword"));
     checkAssignment(url("/WebGoat/SqlInjectionAdvanced/challenge_Login"), params, true);
 
     params.clear();
