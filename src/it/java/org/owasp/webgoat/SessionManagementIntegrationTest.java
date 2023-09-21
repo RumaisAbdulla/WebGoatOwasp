@@ -25,6 +25,7 @@ package org.owasp.webgoat;
 
 import java.util.Map;
 import org.junit.jupiter.api.Test;
+import org.owasp.webgoat.container.SecretsApi;
 
 /**
  * @author Angel Olle Blazquez
@@ -39,7 +40,7 @@ class SessionManagementIT extends IntegrationTest {
 
     checkAssignment(
         url(HIJACK_LOGIN_CONTEXT_PATH),
-        Map.of("username", "webgoat", "password", "webgoat"),
+        Map.of("username", "webgoat", "password", SecretsApi.getSecret("webgoatpass")),
         false);
   }
 }

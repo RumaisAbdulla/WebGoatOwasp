@@ -28,6 +28,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import org.owasp.webgoat.container.LessonDataSource;
+import org.owasp.webgoat.container.SecretsApi;
 import org.owasp.webgoat.container.assignments.AssignmentEndpoint;
 import org.owasp.webgoat.container.assignments.AttackResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,7 +56,7 @@ public class SqlInjectionLesson6b extends AssignmentEndpoint {
   }
 
   protected String getPassword() {
-    String password = "dave";
+    String password = SecretsApi.getSecret("sqlinj6pass");
     try (Connection connection = dataSource.getConnection()) {
       String query = "SELECT password FROM user_system_data WHERE user_name = 'dave'";
       try {

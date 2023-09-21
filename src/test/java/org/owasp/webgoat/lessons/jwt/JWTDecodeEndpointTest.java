@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.owasp.webgoat.container.SecretsApi;
 import org.owasp.webgoat.container.plugins.LessonTest;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -33,7 +34,7 @@ public class JWTDecodeEndpointTest extends LessonTest {
     mockMvc
         .perform(
             MockMvcRequestBuilders.post("/JWT/decode")
-                .param("jwt-encode-user", "wrong")
+                .param("jwt-encode-user", SecretsApi.getSecret("wrongpass"))
                 .content(""))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.lessonCompleted", is(false)));

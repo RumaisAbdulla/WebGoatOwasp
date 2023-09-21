@@ -169,7 +169,7 @@ public class JWTRefreshEndpointTest extends LessonTest {
   void loginShouldNotWorkForJerryWithWrongPassword() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
 
-    var loginJson = Map.of("user", "Jerry", "password", PASSWORD + "wrong");
+    var loginJson = Map.of("user", "Jerry", "password", PASSWORD + SecretsApi.getSecret("wrongpass"));
     mockMvc
         .perform(
             MockMvcRequestBuilders.post("/JWT/refresh/login")

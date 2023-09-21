@@ -23,14 +23,18 @@ import org.owasp.webgoat.container.lessons.Assignment;
 
 public class CSRFIntegrationTest extends IntegrationTest {
 
+  private static final String HTML_START = "<!DOCTYPE html><html><body><form action=\"WEBGOATURL\" method=\"POST\">\n";
+  private static final String HTML_END = "</form></body></html>";
+  private static final String J_SESSIONID = "JSESSIONID";
+
   private static final String trickHTML3 =
-      MyConstants.HTML_START
+     HTML_START
           + "<input type=\"hidden\" name=\"csrf\" value=\"thisisnotchecked\"/>\n"
           + "<input type=\"submit\" name=\"submit\" value=\"assignment 3\"/>\n"
-          + MyConstants.HTML_END;
+          + HTML_END;
 
   private static final String trickHTML4 =
-      MyConstants.HTML_START
+      HTML_START
           + "<input type=\"hidden\" name=\"reviewText\" value=\"hoi\"/>\n"
           + "<input type=\"hidden\" name=\"starts\" value=\"3\"/>\n"
           + "<input type=\"hidden\" name=\"validateReq\""
@@ -46,16 +50,16 @@ public class CSRFIntegrationTest extends IntegrationTest {
           + " name='{\"name\":\"WebGoat\",\"email\":\"webgoat@webgoat.org\",\"content\":\"WebGoat"
           + " is the best!!' value='\"}' />\n"
           + "<input type=\"submit\" value=\"assignment 7\"/>\n"
-          + MyConstants.HTML_END;
+          + HTML_END;
 
   private static final String trickHTML8 =
-      MyConstants.HTML_START
+      HTML_START
           + "<input type=\"hidden\" name=\"username\" value=\"csrf-USERNAME\"/>\n"
           + "<input type=\"hidden\" name=\"password\" value=\"password\"/>\n"
           + "<input type=\"hidden\" name=\"matchingPassword\" value=\"password\"/>\n"
           + "<input type=\"hidden\" name=\"agree\" value=\"agree\"/>\n"
           + "<input type=\"submit\" value=\"assignment 8\"/>\n"
-          + MyConstants.HTML_END;
+          + HTML_END;
 
   private String webwolfFileDir;
 
@@ -116,7 +120,7 @@ public class CSRFIntegrationTest extends IntegrationTest {
         RestAssured.given()
             .when()
             .relaxedHTTPSValidation()
-            .cookie(MyConstants.J_SESSIONID, getWebGoatCookie())
+            .cookie(J_SESSIONID, getWebGoatCookie())
             .cookie("WEBWOLFSESSION", getWebWolfCookie())
             .get(webWolfUrl("/files/" + this.getUser() + "/" + htmlName))
             .then()
@@ -135,7 +139,7 @@ public class CSRFIntegrationTest extends IntegrationTest {
         RestAssured.given()
             .when()
             .relaxedHTTPSValidation()
-            .cookie(MyConstants.J_SESSIONID, getWebGoatCookie())
+            .cookie(J_SESSIONID, getWebGoatCookie())
             .header("Referer", webWolfUrl("/files/fake.html"))
             .post(goatURL)
             .then()
@@ -162,7 +166,7 @@ public class CSRFIntegrationTest extends IntegrationTest {
         RestAssured.given()
             .when()
             .relaxedHTTPSValidation()
-            .cookie(MyConstants.J_SESSIONID, getWebGoatCookie())
+            .cookie(J_SESSIONID, getWebGoatCookie())
             .header("Referer", webWolfUrl("/files/fake.html"))
             .formParams(params)
             .post(goatURL)
@@ -183,7 +187,7 @@ public class CSRFIntegrationTest extends IntegrationTest {
         RestAssured.given()
             .when()
             .relaxedHTTPSValidation()
-            .cookie(MyConstants.J_SESSIONID, getWebGoatCookie())
+            .cookie(J_SESSIONID, getWebGoatCookie())
             .header("Referer", webWolfUrl("/files/fake.html"))
             .contentType(ContentType.TEXT)
             .body(
@@ -216,19 +220,19 @@ public class CSRFIntegrationTest extends IntegrationTest {
         RestAssured.given()
             .when()
             .relaxedHTTPSValidation()
-            .cookie(MyConstants.J_SESSIONID, getWebGoatCookie())
+            .cookie(J_SESSIONID, getWebGoatCookie())
             .header("Referer", webWolfUrl("/files/fake.html"))
             .params(params)
             .post(goatURL)
             .then()
             .extract()
-            .cookie(MyConstants.J_SESSIONID);
+            .cookie(J_SESSIONID);
 
     // select the lesson
     RestAssured.given()
         .when()
         .relaxedHTTPSValidation()
-        .cookie(MyConstants.J_SESSIONID, newCookie)
+        .cookie(J_SESSIONID, newCookie)
         .get(url("CSRF.lesson.lesson"))
         .then()
         .statusCode(200);
@@ -238,7 +242,7 @@ public class CSRFIntegrationTest extends IntegrationTest {
         RestAssured.given()
             .when()
             .relaxedHTTPSValidation()
-            .cookie(MyConstants.J_SESSIONID, newCookie)
+            .cookie(J_SESSIONID, newCookie)
             .post(url("/csrf/login"))
             .then()
             .statusCode(200)
@@ -252,7 +256,7 @@ public class CSRFIntegrationTest extends IntegrationTest {
 
     Overview[] assignments =
         RestAssured.given()
-            .cookie(MyConstants.J_SESSIONID, getWebGoatCookie())
+            .cookie(J_SESSIONID, getWebGoatCookie())
             .get(url("/service/lessonoverview.mvc"))
             .then()
             .extract()

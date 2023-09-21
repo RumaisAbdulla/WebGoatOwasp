@@ -37,6 +37,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.owasp.webgoat.container.SecretsApi;
 import org.owasp.webgoat.container.assignments.AssignmentEndpointTest;
 import org.owasp.webgoat.lessons.hijacksession.cas.Authentication;
 import org.owasp.webgoat.lessons.hijacksession.cas.HijackSessionAuthenticationProvider;
@@ -98,7 +99,7 @@ class HijackSessionAssignmentTest extends AssignmentEndpointTest {
         mockMvc.perform(
             MockMvcRequestBuilders.post(LOGIN_CONTEXT_PATH)
                 .param("username", "webgoat")
-                .param("password", "webgoat"));
+                .param("password", SecretsApi.getSecret("webgoatpass")));
 
     result.andExpect(cookie().value(COOKIE_NAME, not(emptyString())));
     result.andExpect(jsonPath("$.lessonCompleted", CoreMatchers.is(false)));

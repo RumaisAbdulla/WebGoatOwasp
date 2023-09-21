@@ -31,6 +31,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.owasp.webgoat.container.SecretsApi;
 import org.owasp.webgoat.container.assignments.AssignmentEndpointTest;
 import org.owasp.webgoat.lessons.challenges.challenge1.Assignment1;
 import org.owasp.webgoat.lessons.challenges.challenge1.ImageServlet;
@@ -78,7 +79,7 @@ class Assignment1Test extends AssignmentEndpointTest {
         .perform(
             MockMvcRequestBuilders.post("/challenge/1")
                 .param("username", "admin")
-                .param("password", "wrong"))
+                .param("password", SecretsApi.getSecret("wrongpass")))
         .andExpect(
             jsonPath("$.feedback", CoreMatchers.is(messages.getMessage("assignment.not.solved"))))
         .andExpect(jsonPath("$.lessonCompleted", CoreMatchers.is(false)));

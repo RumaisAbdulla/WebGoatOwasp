@@ -117,7 +117,7 @@ public class GeneralLessonIntegrationTest extends IntegrationTest {
     startLesson("SecurePasswords");
     Map<String, Object> params = new HashMap<>();
     params.clear();
-    params.put("password", "ajnaeliclm^&&@kjn.");
+    params.put("password", SecretsApi.getSecret("genlesson"));
     checkAssignment(url("/WebGoat/SecurePasswords/assignment"), params, true);
     checkResults("SecurePasswords/");
 

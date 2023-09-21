@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.owasp.webgoat.container.SecretsApi;
 
 @Slf4j
 public class TokenTest {
@@ -75,7 +76,7 @@ public class TokenTest {
     String token =
         Jwts.builder()
             .setClaims(claims)
-            .signWith(io.jsonwebtoken.SignatureAlgorithm.HS512, "bm5n3SkxCX4kKRy4")
+            .signWith(io.jsonwebtoken.SignatureAlgorithm.HS512, SecretsApi.getSecret("jwtresfreshpass"))
             .compact();
     log.debug(token);
   }

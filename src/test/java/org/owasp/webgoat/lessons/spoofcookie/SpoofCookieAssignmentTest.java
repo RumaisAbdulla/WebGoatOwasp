@@ -41,6 +41,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.owasp.webgoat.container.SecretsApi;
 import org.owasp.webgoat.container.assignments.AssignmentEndpointTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -88,7 +89,7 @@ class SpoofCookieAssignmentTest extends AssignmentEndpointTest {
   @DisplayName("Valid credentials login without authentication cookie")
   void validLoginWithoutCookieTest() throws Exception {
     String username = "webgoat";
-    String password = "webgoat";
+    String password = SecretsApi.getSecret("webgoatpass");
 
     ResultActions result =
         mockMvc.perform(
@@ -134,7 +135,7 @@ class SpoofCookieAssignmentTest extends AssignmentEndpointTest {
   void invalidLoginWithUnsatisfiedServletRequestParameterExceptionOnPasswordMissing()
       throws Exception {
     mockMvc
-        .perform(MockMvcRequestBuilders.post(LOGIN_CONTEXT_PATH).param("username", "webgoat"))
+        .perform(MockMvcRequestBuilders.post(LOGIN_CONTEXT_PATH).param("username", SecretsApi.getSecret("webgoatpass")))
         .andExpect(status().is4xxClientError());
   }
 
@@ -156,7 +157,7 @@ class SpoofCookieAssignmentTest extends AssignmentEndpointTest {
     ResultActions result =
         mockMvc.perform(
             MockMvcRequestBuilders.post(LOGIN_CONTEXT_PATH)
-                .param("username", "webgoat")
+                .param("username", SecretsApi.getSecret("webgoatpass"))
                 .param("password", ""));
 
     result.andExpect(jsonPath("$.lessonCompleted", CoreMatchers.is(false)));

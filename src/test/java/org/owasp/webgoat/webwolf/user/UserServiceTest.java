@@ -34,6 +34,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.owasp.webgoat.container.SecretsApi;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
@@ -46,7 +47,7 @@ public class UserServiceTest {
   @Test
   public void testLoadUserByUsername() {
     var username = "guest";
-    var password = "123";
+    var password = SecretsApi.getSecret("userserviceguestpass");
     WebGoatUser user = new WebGoatUser(username, password);
     when(mockUserRepository.findByUsername(username)).thenReturn(user);
 
@@ -68,7 +69,7 @@ public class UserServiceTest {
   @Test
   public void testAddUser() {
     var username = "guest";
-    var password = "guest";
+    var password = SecretsApi.getSecret("reportcardguest");
 
     sut.addUser(username, password);
 

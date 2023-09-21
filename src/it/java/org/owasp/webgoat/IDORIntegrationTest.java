@@ -15,6 +15,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
+import org.owasp.webgoat.container.SecretsApi;
 
 public class IDORIntegrationTest extends IntegrationTest {
 
@@ -40,7 +41,7 @@ public class IDORIntegrationTest extends IntegrationTest {
     Map<String, Object> params = new HashMap<>();
     params.clear();
     params.put("username", "tom");
-    params.put("password", "cat");
+    params.put("password", SecretsApi.getSecret("idortom"));
 
     checkAssignment(url("/WebGoat/IDOR/login"), params, true);
   }
