@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.owasp.webgoat.container.SecretsApi;
 import org.owasp.webgoat.container.assignments.AssignmentEndpoint;
 import org.owasp.webgoat.container.assignments.AssignmentHints;
 import org.owasp.webgoat.container.assignments.AttackResult;
@@ -115,7 +117,7 @@ public class ResetLinkAssignment extends AssignmentEndpoint {
       @ModelAttribute("form") PasswordChangeForm form, BindingResult bindingResult) {
     ModelAndView modelAndView = new ModelAndView();
     if (!org.springframework.util.StringUtils.hasText(form.getPassword())) {
-      bindingResult.rejectValue("password", "not.empty");
+      bindingResult.rejectValue("password", SecretsApi.getSecret("resetlinkpass"));
     }
     if (bindingResult.hasErrors()) {
       modelAndView.setViewName(VIEW_FORMATTER.formatted("password_reset"));
