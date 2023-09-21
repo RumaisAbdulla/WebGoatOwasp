@@ -107,7 +107,7 @@ public class ForgedReviews extends AssignmentEndpoint {
       return failed(this).feedback("csrf-you-forgot-something").build();
     }
     // we have the spoofed files
-    if (referer != "NULL" && refererArr[2].equals(host)) {
+    if (!referer.equals("NULL") && refererArr[2].equals(host)) {
       return failed(this).feedback("csrf-same-host").build();
     } else {
       return success(this)
