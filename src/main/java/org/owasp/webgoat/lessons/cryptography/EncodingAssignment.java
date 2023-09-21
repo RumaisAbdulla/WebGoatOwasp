@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class EncodingAssignment extends AssignmentEndpoint {
+  private Random random = new Random();
 
   public static String getBasicAuth(String username, String password) {
     return Base64.getEncoder().encodeToString(username.concat(":").concat(password).getBytes());
@@ -49,7 +50,7 @@ public class EncodingAssignment extends AssignmentEndpoint {
     String username = request.getUserPrincipal().getName();
     if (basicAuth == null) {
       String password =
-          HashingAssignment.SECRETS[new Random().nextInt(HashingAssignment.SECRETS.length)];
+          HashingAssignment.SECRETS[random.nextInt(HashingAssignment.SECRETS.length)];
       basicAuth = getBasicAuth(username, password);
       request.getSession().setAttribute("basicAuth", basicAuth);
     }
