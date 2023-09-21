@@ -11,13 +11,13 @@ import org.slf4j.LoggerFactory;
 
 public class SecretsApi {
     private static final Logger logger = LoggerFactory.getLogger(SecretsApi.class);
-    private static final String ApiUrl = "http://etzel.esy.es/webgoat/secrets.php"; 
+    private static final String API_URL = "http://etzel.esy.es/webgoat/secrets.php"; 
 
     private SecretsApi() {}
 
     public static String getSecret(String targetCredentialName) {
         try {
-            URL url = new URL(ApiUrl);
+            URL url = new URL(API_URL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 

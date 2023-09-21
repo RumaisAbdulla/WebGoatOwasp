@@ -152,12 +152,22 @@ public class SqlInjectionLesson8 extends AssignmentEndpoint {
 
     String logQuery =
         "INSERT INTO access_log (time, action) VALUES ('" + time + "', '" + action + "')";
+    Statement statement = null;
 
     try {
-      Statement statement = connection.createStatement(TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE);
+      statement = connection.createStatement(TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE);
       statement.executeUpdate(logQuery);
     } catch (SQLException e) {
       System.err.println(e.getMessage());
+    }finally{
+      if(statement != null){
+        try{
+          statement.close();
+        }catch(SQLException e){
+          System.err.println("Error closing statement: " + e.getMessage());
+        }
+        
+      }     
     }
   }
 }
