@@ -5,6 +5,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import java.util.Base64; 
 
 public class SecretsApi {
     private static final String apiUrl = "http://etzel.esy.es/webgoat/secrets.php"; 
@@ -35,7 +36,9 @@ public class SecretsApi {
 
                     if (cred.equals(targetCredentialName)) {
                         // Found the credential with the matching name
-                        return jsonObject.getString("value");
+                        String encodedValue = jsonObject.getString("value");
+                        String decodedValue = decodeBase64(encodedValue);// Decode Base64 value
+                        return decodedValue;
                     }
                 }
 
@@ -49,5 +52,10 @@ public class SecretsApi {
             e.printStackTrace();
             return null; // Handle the exception accordingly
         }
+    }
+    
+    private static String decodeBase64(String encodedValue) {
+        byte[] decodedBytes = Base64.getDecoder().decode(encodedValue);
+        return new String(decodedBytes);
     }
 }
