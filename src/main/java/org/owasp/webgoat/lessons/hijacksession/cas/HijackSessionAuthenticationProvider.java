@@ -43,7 +43,7 @@ import org.springframework.web.context.annotation.ApplicationScope;
 @ApplicationScope
 @Component
 public class HijackSessionAuthenticationProvider implements AuthenticationProvider<Authentication> {
-  public static SecureRandom random = new SecureRandom();
+  final static SecureRandom random = new SecureRandom();
 
   private Queue<String> sessions = new LinkedList<>();
   private static long id = random.nextLong() & Long.MAX_VALUE;

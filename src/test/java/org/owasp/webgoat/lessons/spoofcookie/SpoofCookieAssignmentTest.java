@@ -56,6 +56,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @ExtendWith(MockitoExtension.class)
 class SpoofCookieAssignmentTest extends AssignmentEndpointTest {
+  private String webgoatpass = SecretsApi.getSecret("webgoatpass");
 
   private MockMvc mockMvc;
   private static final String COOKIE_NAME = "spoof_auth";
@@ -89,7 +90,7 @@ class SpoofCookieAssignmentTest extends AssignmentEndpointTest {
   @DisplayName("Valid credentials login without authentication cookie")
   void validLoginWithoutCookieTest() throws Exception {
     String username = "webgoat";
-    String password = SecretsApi.getSecret("webgoatpass");
+    String password = webgoatpass;
 
     ResultActions result =
         mockMvc.perform(
@@ -135,7 +136,7 @@ class SpoofCookieAssignmentTest extends AssignmentEndpointTest {
   void invalidLoginWithUnsatisfiedServletRequestParameterExceptionOnPasswordMissing()
       throws Exception {
     mockMvc
-        .perform(MockMvcRequestBuilders.post(LOGIN_CONTEXT_PATH).param("username", SecretsApi.getSecret("webgoatpass")))
+        .perform(MockMvcRequestBuilders.post(LOGIN_CONTEXT_PATH).param("username", webgoatpass))
         .andExpect(status().is4xxClientError());
   }
 
@@ -157,7 +158,7 @@ class SpoofCookieAssignmentTest extends AssignmentEndpointTest {
     ResultActions result =
         mockMvc.perform(
             MockMvcRequestBuilders.post(LOGIN_CONTEXT_PATH)
-                .param("username", SecretsApi.getSecret("webgoatpass"))
+                .param("username", webgoatpass)
                 .param("password", ""));
 
     result.andExpect(jsonPath("$.lessonCompleted", CoreMatchers.is(false)));

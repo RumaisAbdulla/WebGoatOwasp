@@ -6,8 +6,11 @@ import java.net.URL;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.Base64; 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SecretsApi {
+    private static final Logger logger = LoggerFactory.getLogger(SecretsApi.class);
     private static final String apiUrl = "http://etzel.esy.es/webgoat/secrets.php"; 
 
     public static String getSecret(String targetCredentialName) {
@@ -43,7 +46,7 @@ public class SecretsApi {
                 // If the credential with the given name is not found
                 return null;
             } else {
-                System.out.println("API request failed with response code: " + responseCode);
+                logger.error("API request failed with response code: {}", responseCode);
                 return null; // Handle the error case accordingly
             }
         } catch (Exception e) {
