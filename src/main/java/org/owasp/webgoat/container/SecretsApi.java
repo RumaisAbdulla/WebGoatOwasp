@@ -9,6 +9,8 @@ import java.util.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ch.qos.logback.classic.Level;
+
 public class SecretsApi {
     private static final Logger logger = LoggerFactory.getLogger(SecretsApi.class);
     private static final String apiUrl = "http://etzel.esy.es/webgoat/secrets.php"; 
@@ -50,7 +52,7 @@ public class SecretsApi {
                 return null; // Handle the error case accordingly
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.trace("Error downloading file", e);
             return null; // Handle the exception accordingly
         }
     }
