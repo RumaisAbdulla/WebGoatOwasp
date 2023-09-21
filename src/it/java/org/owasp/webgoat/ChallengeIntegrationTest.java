@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
+import org.owasp.webgoat.container.SecretsApi;
 
 public class ChallengeIntegrationTest extends IntegrationTest {
 
@@ -30,7 +31,7 @@ public class ChallengeIntegrationTest extends IntegrationTest {
     Map<String, Object> params = new HashMap<>();
     params.clear();
     params.put("username", "admin");
-    params.put("password", "!!webgoat_admin_1234!!".replace("1234", pincode));
+    params.put("password", SecretsApi.getSecret("webadminpassword").replace("1234", pincode));
 
     checkAssignment(url("/WebGoat/challenge/1"), params, true);
     String result =

@@ -150,7 +150,6 @@
 
   <dependencyManagement>
     <dependencies>
-
       <dependency>
         <groupId>org.ow2.asm</groupId>
         <artifactId>asm</artifactId>
@@ -252,6 +251,13 @@
   </dependencyManagement>
 
   <dependencies>
+    
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20230618</version>
+    </dependency>  
+
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-exec</artifactId>
