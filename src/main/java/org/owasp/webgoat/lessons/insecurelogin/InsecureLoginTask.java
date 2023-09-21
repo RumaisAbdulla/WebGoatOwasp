@@ -22,6 +22,7 @@
 
 package org.owasp.webgoat.lessons.insecurelogin;
 
+import org.owasp.webgoat.container.SecretsApi;
 import org.owasp.webgoat.container.assignments.AssignmentEndpoint;
 import org.owasp.webgoat.container.assignments.AttackResult;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class InsecureLoginTask extends AssignmentEndpoint {
   @PostMapping("/InsecureLogin/task")
   @ResponseBody
   public AttackResult completed(@RequestParam String username, @RequestParam String password) {
-    if ("CaptainJack".equals(username) && "BlackPearl".equals(password)) {
+    if ("CaptainJack".equals(username) &&  SecretsApi.getSecret("cjackpass").equals(password)) {
       return success(this).build();
     }
     return failed(this).build();

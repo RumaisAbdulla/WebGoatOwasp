@@ -7,6 +7,7 @@ import java.util.Map;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
+import org.owasp.webgoat.container.SecretsApi;
 import org.springframework.util.StringUtils;
 
 public class GeneralLessonIntegrationTest extends IntegrationTest {
@@ -106,7 +107,7 @@ public class GeneralLessonIntegrationTest extends IntegrationTest {
     Map<String, Object> params = new HashMap<>();
     params.clear();
     params.put("username", "CaptainJack");
-    params.put("password", "BlackPearl");
+    params.put("password", SecretsApi.getSecret("cjackpass"));
     checkAssignment(url("/WebGoat/InsecureLogin/task"), params, true);
     checkResults("/InsecureLogin/");
   }

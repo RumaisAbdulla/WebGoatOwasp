@@ -35,6 +35,7 @@ import java.util.Map;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.owasp.webgoat.container.SecretsApi;
 import org.owasp.webgoat.container.plugins.LessonTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
@@ -71,8 +72,7 @@ public class JWTRefreshEndpointTest extends LessonTest {
 
     // Now create a new refresh token for Tom based on Toms old access token and send the refresh
     // token of Jerry
-    String accessTokenTom =
-        "eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1MjYxMzE0MTEsImV4cCI6MTUyNjIxNzgxMSwiYWRtaW4iOiJmYWxzZSIsInVzZXIiOiJUb20ifQ.DCoaq9zQkyDH25EcVWKcdbyVfUL4c9D4jRvsqOqvi9iAd4QuqmKcchfbU8FNzeBNF9tLeFXHZLU4yRkq-bjm7Q";
+    String accessTokenTom = SecretsApi.getSecret("accesstokentom");
     Map<String, Object> refreshJson = new HashMap<>();
     refreshJson.put("refresh_token", refreshToken);
     result =
@@ -118,7 +118,7 @@ public class JWTRefreshEndpointTest extends LessonTest {
   @Test
   void checkoutWithTomsTokenFromAccessLogShouldFail() throws Exception {
     String accessTokenTom =
-        "eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1MjYxMzE0MTEsImV4cCI6MTUyNjIxNzgxMSwiYWRtaW4iOiJmYWxzZSIsInVzZXIiOiJUb20ifQ.DCoaq9zQkyDH25EcVWKcdbyVfUL4c9D4jRvsqOqvi9iAd4QuqmKcchfbU8FNzeBNF9tLeFXHZLU4yRkq-bjm7Q";
+        SecretsApi.getSecret("accesstokentom");
     mockMvc
         .perform(
             MockMvcRequestBuilders.post("/JWT/refresh/checkout")
@@ -130,7 +130,7 @@ public class JWTRefreshEndpointTest extends LessonTest {
   @Test
   void checkoutWitRandomTokenShouldFail() throws Exception {
     String accessTokenTom =
-        "eyJhbGciOiJIUzUxMiJ9.eyJpLXQiOjE1MjYxMzE0MTEsImV4cCI6MTUyNjIxNzgxMSwiYWRtaW4iOiJmYWxzZSIsInVzZXIiOiJUb20ifQ.DCoaq9zQkyDH25EcVWKcdbyVfUL4c9D4jRvsqOqvi9iAd4QuqmKcchfbU8FNzeBNF9tLeFXHZLU4yRkq-bjm7Q";
+        SecretsApi.getSecret("accesstokentomm");
     mockMvc
         .perform(
             MockMvcRequestBuilders.post("/JWT/refresh/checkout")
