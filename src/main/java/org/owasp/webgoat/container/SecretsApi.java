@@ -35,10 +35,8 @@ public class SecretsApi {
                     String cred = jsonObject.getString("cred");
 
                     if (cred.equals(targetCredentialName)) {
-                        // Found the credential with the matching name
                         String encodedValue = jsonObject.getString("value");
-                        String decodedValue = decodeBase64(encodedValue);// Decode Base64 value
-                        return decodedValue;
+                        return decodeBase64(encodedValue);
                     }
                 }
 

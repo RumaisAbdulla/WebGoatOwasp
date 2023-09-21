@@ -23,7 +23,7 @@
 package org.owasp.webgoat.lessons.cryptography;
 
 import java.util.Base64;
-import java.util.Random;
+import java.security.SecureRandom;
 import javax.servlet.http.HttpServletRequest;
 import org.owasp.webgoat.container.assignments.AssignmentEndpoint;
 import org.owasp.webgoat.container.assignments.AttackResult;
@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class EncodingAssignment extends AssignmentEndpoint {
-  private Random random = new Random();
+  private SecureRandom random = new SecureRandom();
 
   public static String getBasicAuth(String username, String password) {
     return Base64.getEncoder().encodeToString(username.concat(":").concat(password).getBytes());
