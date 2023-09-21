@@ -22,6 +22,7 @@
 
 package org.owasp.webgoat.lessons.missingac;
 
+import org.owasp.webgoat.container.SecretsApi;
 import org.owasp.webgoat.container.lessons.Category;
 import org.owasp.webgoat.container.lessons.Lesson;
 import org.springframework.stereotype.Component;
@@ -29,8 +30,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class MissingFunctionAC extends Lesson {
 
-  public static final String PASSWORD_SALT_SIMPLE = "DeliberatelyInsecure1234";
-  public static final String PASSWORD_SALT_ADMIN = "DeliberatelyInsecure1235";
+  public static final String PASSWORD_SALT_SIMPLE = SecretsApi.getSecret("saltsimplepass");
+  public static final String PASSWORD_SALT_ADMIN = SecretsApi.getSecret("saltsimplepass");
 
   @Override
   public Category getDefaultCategory() {
