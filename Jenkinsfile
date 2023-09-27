@@ -43,15 +43,9 @@ pipeline {
             steps {
                 script {
                     def zapHome = 'C:\\Program Files\\OWASP\\Zed Attack Proxy'
-                    def targetUrl = 'http://localhost:8080/WebGoat'
-                    def reportDir = 'reports'
 
-                    bat "start \"ZAP\" /B \"${zapHome}\\zap.bat\" -daemon -host localhost -port 8800 -config api.key=hba1ge6kipfp41fdu7o7t0ul33"
-                    sleep(time: 30, unit: 'SECONDS')
-                    bat "\"${zapHome}\\zap-api-scan.py\" -t ${targetUrl} -r \"${reportDir}\\zap-report.html\" -x \"${reportDir}\\zap-report.xml\""
-                    bat "taskkill /IM java.exe /F"
-
-                    archiveArtifacts artifacts: "${reportDir}/*", allowEmptyArchive: true
+                    bat "start \"ZAP\" /B \"${zapHome}\\zap.bat\" --zap-url localhost -p 8800 --api-key hba1ge6kipfp41fdu7o7t0ul33 quick-scan -c WebGoat -u tester -s all --spider -r http://localhost:8080/WebGoat"
+                    sleep(time: 10, unit: 'SECONDS')
                 }
             }
         }        
