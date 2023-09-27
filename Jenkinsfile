@@ -1,5 +1,11 @@
 pipeline {
 	agent any
+
+    environment {
+        ZAP_HOME = 'C:\Program Files\OWASP\Zed Attack Proxy'
+        TARGET_URL = 'http://localhost:8080\WebGoat'
+        REPORT_DIR = 'reports'
+    }
 	
 	stages {
 		
