@@ -46,7 +46,7 @@ pipeline {
                     def targetUrl = 'http://localhost:8080/WebGoat'
                     def reportDir = 'reports'
 
-                    bat "start \"ZAP\" /B \"${zapHome}\\zap.bat\" -daemon -host 0.0.0.0 -port 8080 -config api.disablekey=true"
+                    bat "start \"ZAP\" /B \"${zapHome}\\zap.bat\" -daemon -host localhost -port 8800 -config api.key=hba1ge6kipfp41fdu7o7t0ul33"
                     sleep(time: 30, unit: 'SECONDS')
                     bat "\"${zapHome}\\zap-api-scan.py\" -t ${targetUrl} -r \"${reportDir}\\zap-report.html\" -x \"${reportDir}\\zap-report.xml\""
                     bat "taskkill /IM java.exe /F"
