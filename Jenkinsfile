@@ -27,7 +27,7 @@ pipeline {
                 script{
 					def scannerHome = tool 'sonar-local';
 					withSonarQubeEnv() {
-						bat "${scannerHome}/bin/sonar-scanner -Dsonar.projectName=WebgoatLast -Dsonar.projectKey=WebgoatLast -Dsonar.java.binaries=target/classes"
+						bat "${scannerHome}/bin/sonar-scanner -Dsonar.projectName=Webgoat -Dsonar.projectKey=WebgoatLast -Dsonar.java.binaries=target/classes"
 					}
                 }
             }
