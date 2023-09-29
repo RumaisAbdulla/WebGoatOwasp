@@ -34,7 +34,7 @@ public class InsecureLoginTask extends AssignmentEndpoint {
   @PostMapping("/InsecureLogin/task")
   @ResponseBody
   public AttackResult completed(@RequestParam String username, @RequestParam String password) {
-    if ("CaptainJack".equals(username) &&  SecretsApi.getSecret("cjackpass").equals(password)) {
+    if ("CaptainJack".equals(username) && SecretsApi.getSecret("cjackpass").equals(password)) {
       return success(this).build();
     }
     return failed(this).build();

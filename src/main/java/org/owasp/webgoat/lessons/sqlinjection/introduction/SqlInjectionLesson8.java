@@ -159,15 +159,14 @@ public class SqlInjectionLesson8 extends AssignmentEndpoint {
       statement.executeUpdate(logQuery);
     } catch (SQLException e) {
       System.err.println(e.getMessage());
-    }finally{
-      if(statement != null){
-        try{
+    } finally {
+      if (statement != null) {
+        try {
           statement.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
           System.err.println("Error closing statement: " + e.getMessage());
         }
-        
-      }     
+      }
     }
   }
 }

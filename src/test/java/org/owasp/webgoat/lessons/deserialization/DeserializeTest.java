@@ -68,8 +68,7 @@ class DeserializeTest extends AssignmentEndpointTest {
 
   @Test
   void wrongVersion() throws Exception {
-    String token =
-        SecretsApi.getSecret("dtokenwrong");
+    String token = SecretsApi.getSecret("dtokenwrong");
     mockMvc
         .perform(MockMvcRequestBuilders.post("/InsecureDeserialization/task").param("token", token))
         .andExpect(status().isOk())
@@ -83,8 +82,7 @@ class DeserializeTest extends AssignmentEndpointTest {
 
   @Test
   void expiredTask() throws Exception {
-    String token =
-        SecretsApi.getSecret("dtokenexpiry");
+    String token = SecretsApi.getSecret("dtokenexpiry");
     mockMvc
         .perform(MockMvcRequestBuilders.post("/InsecureDeserialization/task").param("token", token))
         .andExpect(status().isOk())
@@ -97,8 +95,7 @@ class DeserializeTest extends AssignmentEndpointTest {
 
   @Test
   void checkOtherObject() throws Exception {
-    String token =
-        SecretsApi.getSecret("dtokencheck");
+    String token = SecretsApi.getSecret("dtokencheck");
     mockMvc
         .perform(MockMvcRequestBuilders.post("/InsecureDeserialization/task").param("token", token))
         .andExpect(status().isOk())

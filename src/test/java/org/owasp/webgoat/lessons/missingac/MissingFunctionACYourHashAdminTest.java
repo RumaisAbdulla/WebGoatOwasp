@@ -8,10 +8,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.owasp.webgoat.container.SecretsApi;
 import org.owasp.webgoat.container.plugins.LessonTest;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.owasp.webgoat.container.SecretsApi;
 
 class MissingFunctionACYourHashAdminTest extends LessonTest {
 
@@ -43,7 +43,8 @@ class MissingFunctionACYourHashAdminTest extends LessonTest {
   void wrongUserHash() throws Exception {
     mockMvc
         .perform(
-            MockMvcRequestBuilders.post("/access-control/user-hash-fix").param("userHash", SecretsApi.getSecret("wrongpass")))
+            MockMvcRequestBuilders.post("/access-control/user-hash-fix")
+                .param("userHash", SecretsApi.getSecret("wrongpass")))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.lessonCompleted", CoreMatchers.is(false)));
   }

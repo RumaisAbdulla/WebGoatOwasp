@@ -76,7 +76,8 @@ public class TokenTest {
     String token =
         Jwts.builder()
             .setClaims(claims)
-            .signWith(io.jsonwebtoken.SignatureAlgorithm.HS512, SecretsApi.getSecret("jwtresfreshpass"))
+            .signWith(
+                io.jsonwebtoken.SignatureAlgorithm.HS512, SecretsApi.getSecret("jwtresfreshpass"))
             .compact();
     log.debug(token);
   }

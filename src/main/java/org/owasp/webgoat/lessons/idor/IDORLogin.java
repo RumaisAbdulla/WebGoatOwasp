@@ -24,7 +24,6 @@ package org.owasp.webgoat.lessons.idor;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.owasp.webgoat.container.SecretsApi;
 import org.owasp.webgoat.container.assignments.AssignmentEndpoint;
 import org.owasp.webgoat.container.assignments.AssignmentHints;

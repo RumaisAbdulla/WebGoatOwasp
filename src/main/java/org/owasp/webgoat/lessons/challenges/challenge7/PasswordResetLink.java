@@ -11,12 +11,14 @@ import java.util.Random;
  */
 public class PasswordResetLink {
   private SecureRandom random = new SecureRandom();
+
   public String createPasswordReset(String username, String key) {
     if (username.equalsIgnoreCase("admin")) {
       // Admin has a fix reset link
       this.random.setSeed(key.length());
     }
-    return scramble(this.random, scramble(this.random, scramble(this.random, MD5.getHashString(username))));
+    return scramble(
+        this.random, scramble(this.random, scramble(this.random, MD5.getHashString(username))));
   }
 
   public static String scramble(Random random, String inputString) {

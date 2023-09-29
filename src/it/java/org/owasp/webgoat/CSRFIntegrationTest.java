@@ -23,12 +23,13 @@ import org.owasp.webgoat.container.lessons.Assignment;
 
 public class CSRFIntegrationTest extends IntegrationTest {
 
-  private static final String HTML_START = "<!DOCTYPE html><html><body><form action=\"WEBGOATURL\" method=\"POST\">\n";
+  private static final String HTML_START =
+      "<!DOCTYPE html><html><body><form action=\"WEBGOATURL\" method=\"POST\">\n";
   private static final String HTML_END = "</form></body></html>";
   private static final String J_SESSIONID = "JSESSIONID";
 
   private static final String trickHTML3 =
-     HTML_START
+      HTML_START
           + "<input type=\"hidden\" name=\"csrf\" value=\"thisisnotchecked\"/>\n"
           + "<input type=\"submit\" name=\"submit\" value=\"assignment 3\"/>\n"
           + HTML_END;

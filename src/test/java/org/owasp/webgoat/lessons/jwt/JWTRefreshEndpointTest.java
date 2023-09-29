@@ -117,8 +117,7 @@ public class JWTRefreshEndpointTest extends LessonTest {
 
   @Test
   void checkoutWithTomsTokenFromAccessLogShouldFail() throws Exception {
-    String accessTokenTom =
-        SecretsApi.getSecret("accesstokentom");
+    String accessTokenTom = SecretsApi.getSecret("accesstokentom");
     mockMvc
         .perform(
             MockMvcRequestBuilders.post("/JWT/refresh/checkout")
@@ -129,8 +128,7 @@ public class JWTRefreshEndpointTest extends LessonTest {
 
   @Test
   void checkoutWitRandomTokenShouldFail() throws Exception {
-    String accessTokenTom =
-        SecretsApi.getSecret("accesstokentomm");
+    String accessTokenTom = SecretsApi.getSecret("accesstokentomm");
     mockMvc
         .perform(
             MockMvcRequestBuilders.post("/JWT/refresh/checkout")
@@ -169,7 +167,8 @@ public class JWTRefreshEndpointTest extends LessonTest {
   void loginShouldNotWorkForJerryWithWrongPassword() throws Exception {
     ObjectMapper objectMapper = new ObjectMapper();
 
-    var loginJson = Map.of("user", "Jerry", "password", PASSWORD + SecretsApi.getSecret("wrongpass"));
+    var loginJson =
+        Map.of("user", "Jerry", "password", PASSWORD + SecretsApi.getSecret("wrongpass"));
     mockMvc
         .perform(
             MockMvcRequestBuilders.post("/JWT/refresh/login")

@@ -27,13 +27,11 @@ import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.TextCodec;
-
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import org.owasp.webgoat.container.assignments.AssignmentEndpoint;
 import org.owasp.webgoat.container.assignments.AssignmentHints;
 import org.owasp.webgoat.container.assignments.AttackResult;
@@ -47,7 +45,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AssignmentHints({"jwt-secret-hint1", "jwt-secret-hint2", "jwt-secret-hint3"})
 public class JWTSecretKeyEndpoint extends AssignmentEndpoint {
-
 
   public static final String[] SECRETS = {
     "victory", "business", "available", "shipping", "washington"

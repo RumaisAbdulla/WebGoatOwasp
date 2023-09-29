@@ -25,7 +25,6 @@ package org.owasp.webgoat.lessons.csrf;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 import org.owasp.webgoat.container.i18n.PluginMessages;
 import org.owasp.webgoat.container.session.UserSessionData;
