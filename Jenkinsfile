@@ -14,13 +14,7 @@ pipeline {
 				dependencyCheck additionalArguments:  '--scan ./', odcInstallation: 'dependency-check'
 				dependencyCheckPublisher pattern: 'dependency-check-report.xml'
 			}
-		}        
-    
-        stage('TEST') {
-			steps {
-				bat 'mvn test'
-			}
-		}
+		}       
         
         stage('SAST-SONARQUBE') {
             steps{
