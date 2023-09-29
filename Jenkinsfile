@@ -27,9 +27,15 @@ pipeline {
             }
         }
 
-        stage('BUILD') {
+        stage('TEST') {
 			steps {
 				bat 'mvn clean package'
+			}
+		}
+
+        stage('BUILD') {
+			steps {
+				bat 'mvn clean install -DskipTests=true'
 			}
 		}
              
