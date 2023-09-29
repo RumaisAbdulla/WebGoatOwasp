@@ -41,16 +41,11 @@ pipeline {
         
         stage('DOCKER') {
 			steps {
-                script{
                     withDockerRegistry(credentialsId: '1969a5e8-8522-46bf-9f44-76d8458383b4', toolName: 'Docker') {
-                        bat 'docker build -t webgoat:latest -f docker/dockerfile'
-                        bat 'docker tag webgoat rumaisabdulla/webgoat:latest'
-                        bat 'docker push rumaisabdulla/webgoat:latest'
-                    }   
+                        bat 'docker build -t webgoat:latest .'
                 }
 			}
 		}
              
-
     }
 }
