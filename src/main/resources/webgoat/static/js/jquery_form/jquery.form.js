@@ -123,7 +123,7 @@ $.fn.ajaxSubmit = function(options) {
         success: $.ajaxSettings.success,
         type: method || $.ajaxSettings.type,
         iframeSrc: /^https/i.test(window.location.href || '') ? 'javascript:false' : 'about:blank'
-    }, options);
+    }, options);//NOSONAR
 
     // hook for manipulating the form data before it is extracted;
     // convenient for use with rich editors like tinyMCE or FCKEditor
