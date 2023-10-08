@@ -56,12 +56,12 @@ public class Assignment5 extends AssignmentEndpoint {
       return failed(this).feedback("user.not.larry").feedbackArgs(username_login).build();
     }
     try (var connection = dataSource.getConnection()) {
-      var statement =
-      connection.prepareStatement(
-          "select password from challenge_users where userid = ? and password = ?");
+      PreparedStatement statement =
+          connection.prepareStatement(
+              "select password from challenge_users where userid = ? and password = ?");
       statement.setString(1, username_login);
       statement.setString(2, password_login);
-      var resultSet = statement.executeQuery();
+      ResultSet resultSet = statement.executeQuery();
 
       if (resultSet.next()) {
         return success(this).feedback("challenge.solved").feedbackArgs(Flag.FLAGS.get(5)).build();
