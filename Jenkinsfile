@@ -1,5 +1,8 @@
 pipeline {
 	agent any
+     environment {
+      SEMGREP_APP_TOKEN = credentials('semgrep')
+    }
     
 	stages {
 		
@@ -24,6 +27,13 @@ pipeline {
 						bat "${scannerHome}/bin/sonar-scanner -Dsonar.projectName=Webgoat -Dsonar.projectKey=WebgoatLast -Dsonar.java.binaries=target/classes"
 					}
                 }
+            }
+        }
+        
+        stage('Semgrep-Scan') {
+            steps {
+                  bat 'pip install semgrep'
+                  bat 'semgrep ci'
             }
         }
 
