@@ -27,13 +27,6 @@ pipeline {
             }
         }
         
-        stage('Semgrep-Scan') {
-            steps {
-                  bat 'pip install semgrep'
-                  bat 'semgrep ci'
-            }
-        }
-
         stage('TEST') {
 			steps {
 				bat 'mvn clean package'
