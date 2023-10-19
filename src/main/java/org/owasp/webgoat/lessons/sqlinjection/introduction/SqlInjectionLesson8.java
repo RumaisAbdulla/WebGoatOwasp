@@ -63,19 +63,23 @@ public class SqlInjectionLesson8 extends AssignmentEndpoint {
   protected AttackResult injectableQueryConfidentiality(String name, String auth_tan) {
     StringBuilder output = new StringBuilder();
     String query =
-        "SELECT * FROM employees WHERE last_name = '"
-            + name
-            + "' AND auth_tan = '"
-            + auth_tan
-            + "'";
+        "SELECT * FROM employees WHERE last_name = ? AND auth_tan = ?";
+    // String query =
+    //     "SELECT * FROM employees WHERE last_name = '"
+    //         + name
+    //         + "' AND auth_tan = '"
+    //         + auth_tan
+    //         + "'";
 
     try (Connection connection = dataSource.getConnection()) {
-      try {
-        Statement statement =
-            connection.createStatement(
-                ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+      try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
+        // Statement statement =
+        //     connection.createStatement(
+        //         ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         log(connection, query);
-        ResultSet results = statement.executeQuery(query);
+        preparedStatement.setString(1, name);
+        preparedStatement.setString(2, auth_tan);
+        ResultSet results = preparedStatement.executeQuery(query);
 
         if (results.getStatement() != null) {
           if (results.first()) {
@@ -150,19 +154,25 @@ public class SqlInjectionLesson8 extends AssignmentEndpoint {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     String time = sdf.format(cal.getTime());
 
-    String logQuery =
-        "INSERT INTO access_log (time, action) VALUES ('" + time + "', '" + action + "')";
-    Statement statement = null;
+    // String logQuery =
+    //     "INSERT INTO access_log (time, action) VALUES ('" + time + "', '" + action + "')";
+    // Statement statement = null;
+    String logQuery = "INSERT INTO access_log (time, action) VALUES (?, ?)";
+    PreparedStatement preparedStatement = null;
 
     try {
-      statement = connection.createStatement(TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE);
-      statement.executeUpdate(logQuery);
+      // statement = connection.createStatement(TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE);
+      // statement.executeUpdate(logQuery);
+      preparedStatement = connection.prepareStatement(logQuery);
+        preparedStatement.setString(1, time);
+        preparedStatement.setString(2, action);
+        preparedStatement.executeUpdate();
     } catch (SQLException e) {
       System.err.println(e.getMessage());
     } finally {
-      if (statement != null) {
+      if (preparedStatement  != null) {
         try {
-          statement.close();
+          preparedStatement .close();
         } catch (SQLException e) {
           System.err.println("Error closing statement: " + e.getMessage());
         }

@@ -22,10 +22,13 @@
 
 package org.owasp.webgoat.lessons.sqlinjection.introduction;
 
+import static java.sql.ResultSet.CONCUR_UPDATABLE;
+import static java.sql.ResultSet.TYPE_SCROLL_SENSITIVE;
 import static org.hsqldb.jdbc.JDBCResultSet.CONCUR_UPDATABLE;
 import static org.hsqldb.jdbc.JDBCResultSet.TYPE_SCROLL_SENSITIVE;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -63,17 +66,21 @@ public class SqlInjectionLesson9 extends AssignmentEndpoint {
 
   protected AttackResult injectableQueryIntegrity(String name, String auth_tan) {
     StringBuilder output = new StringBuilder();
-    String query =
-        "SELECT * FROM employees WHERE last_name = '"
-            + name
-            + "' AND auth_tan = '"
-            + auth_tan
-            + "'";
+    // String query =
+    //     "SELECT * FROM employees WHERE last_name = '"
+    //         + name
+    //         + "' AND auth_tan = '"
+    //         + auth_tan
+    //         + "'";
     try (Connection connection = dataSource.getConnection()) {
-      try {
-        Statement statement = connection.createStatement(TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE);
+      String query = "SELECT * FROM employees WHERE last_name = ? AND auth_tan = ?";
+      try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
+        preparedStatement.setString(1, name);
+        preparedStatement.setString(2, auth_tan);
+        // Statement statement = connection.createStatement(TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE);
         SqlInjectionLesson8.log(connection, query);
-        ResultSet results = statement.executeQuery(query);
+        ResultSet results = preparedStatement.executeQuery();
+        // ResultSet results = statement.executeQuery(query)
         var test = results.getRow() != 0;
         if (results.getStatement() != null) {
           if (results.first()) {
