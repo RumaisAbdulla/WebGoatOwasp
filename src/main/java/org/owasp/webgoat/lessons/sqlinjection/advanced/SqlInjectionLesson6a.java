@@ -60,18 +60,16 @@ public class SqlInjectionLesson6a extends AssignmentEndpoint {
   }
 
   public AttackResult injectableQuery(String accountName) {
-    String query = "";
+    String query = "select userid from sql_challenge_users where userid = ?";
     try (Connection connection = dataSource.getConnection()) {
       boolean usedUnion = true;
-      query = "SELECT * FROM user_data WHERE last_name = '" + accountName + "'";
       // Check if Union is used
       if (!accountName.matches("(?i)(^[^-/*;)]*)(\\s*)UNION(.*$)")) {
         usedUnion = false;
       }
-      try (Statement statement =
-          connection.createStatement(
-              ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
-        ResultSet results = statement.executeQuery(query);
+      try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        preparedStatement.setString(1, accountName); // Set user input as a parameter
+        ResultSet results = preparedStatement.executeQuery();
 
         if ((results != null) && results.first()) {
           ResultSetMetaData resultsMetaData = results.getMetaData();
