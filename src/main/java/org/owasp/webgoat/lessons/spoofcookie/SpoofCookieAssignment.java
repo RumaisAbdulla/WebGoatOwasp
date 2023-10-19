@@ -75,6 +75,7 @@ public class SpoofCookieAssignment extends AssignmentEndpoint {
   public void cleanup(HttpServletResponse response) {
     Cookie cookie = new Cookie(COOKIE_NAME, "");
     cookie.setMaxAge(0);
+    cookie.setSecure(true);
     cookie.setHttpOnly(true);
     response.addCookie(cookie);
   }
@@ -93,6 +94,7 @@ public class SpoofCookieAssignment extends AssignmentEndpoint {
       Cookie newCookie = new Cookie(COOKIE_NAME, newCookieValue);
       newCookie.setPath("/WebGoat");
       newCookie.setSecure(true);
+      newCookie.setHttpOnly(true);
       response.addCookie(newCookie);
       return informationMessage(this)
           .feedback("spoofcookie.login")
