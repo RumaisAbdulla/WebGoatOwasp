@@ -46,6 +46,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.multipart.MultipartFile;
 
 /** Controller for uploading a file */
 @Controller
@@ -75,8 +78,12 @@ public class FileServer {
     var user = (WebGoatUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     var destinationDir = new File(fileLocation, user.getUsername());
     destinationDir.mkdirs();
-    myFile.transferTo(new File(destinationDir, myFile.getOriginalFilename()));
-    log.debug("File saved to {}", new File(destinationDir, myFile.getOriginalFilename()));
+
+    String originalFileName = FilenameUtils.getName(myFile.getOriginalFilename());
+    myFile.transferTo(new File(destinationDir, originalFileName));
+    log.debug("File saved to {}", new File(destinationDir, originalFileName));
+    // myFile.transferTo(new File(destinationDir, myFile.getOriginalFilename()));
+    // log.debug("File saved to {}", new File(destinationDir, myFile.getOriginalFilename()));
 
     return new ModelAndView(
         new RedirectView("files", true),

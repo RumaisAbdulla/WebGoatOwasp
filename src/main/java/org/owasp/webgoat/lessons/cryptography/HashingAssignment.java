@@ -44,24 +44,7 @@ public class HashingAssignment extends AssignmentEndpoint {
 
   public static final String[] SECRETS = {"secret", "admin", "password", "123456", "passw0rd"};
 
-  @RequestMapping(path = "/crypto/hashing/md5", produces = MediaType.TEXT_HTML_VALUE)
-  @ResponseBody
-  public String getMd5(HttpServletRequest request) throws NoSuchAlgorithmException {
-
-    String md5Hash = (String) request.getSession().getAttribute("md5Hash");
-    if (md5Hash == null) {
-
-      String secret = SECRETS[random.nextInt(SECRETS.length)];
-
-      MessageDigest md = MessageDigest.getInstance("MD5");
-      md.update(secret.getBytes());
-      byte[] digest = md.digest();
-      md5Hash = DatatypeConverter.printHexBinary(digest).toUpperCase();
-      request.getSession().setAttribute("md5Hash", md5Hash);
-      request.getSession().setAttribute("md5Secret", secret);
-    }
-    return md5Hash;
-  }
+ 
 
   @RequestMapping(path = "/crypto/hashing/sha256", produces = MediaType.TEXT_HTML_VALUE)
   @ResponseBody
