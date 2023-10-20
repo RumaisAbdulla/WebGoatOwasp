@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.HtmlUtils;
 
 /**
  * Assignment for picking a good security question.
@@ -97,7 +98,8 @@ public class SecurityQuestionAssignment extends AssignmentEndpoint {
     if (answer.isPresent()) {
       triedQuestions.incr(question);
       if (triedQuestions.isComplete()) {
-        return success(this).output("<b>" + answer + "</b>").build();
+        String escapedAnswer = HtmlUtils.htmlEscape(questions.get(question));
+        return success(this).output("<b>" + escapedAnswer + "</b>").build();
       }
     }
     return informationMessage(this)
