@@ -29,6 +29,7 @@ pipeline {
         
         stage('BUILD') {
 			steps {
+                bat 'mvn spotless:apply'
 				bat 'mvn  clean install -DskipTests=true'
 			}
 		}
