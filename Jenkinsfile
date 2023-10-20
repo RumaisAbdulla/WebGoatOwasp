@@ -26,10 +26,16 @@ pipeline {
                 }
             }
         }
+
+         stage('Test') {
+			steps {
+				bat 'mvn  test'
+			}
+		}
         
         stage('BUILD') {
 			steps {
-				bat 'mvn install -DskipTests=true'
+				bat 'mvn  clean install -DskipTests=true'
 			}
 		}
              
