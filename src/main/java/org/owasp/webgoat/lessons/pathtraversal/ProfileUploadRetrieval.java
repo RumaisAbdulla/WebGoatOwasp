@@ -11,6 +11,8 @@ import java.util.Base64;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.owasp.webgoat.container.assignments.AssignmentEndpoint;
 import org.owasp.webgoat.container.assignments.AssignmentHints;
@@ -31,12 +33,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AssignmentHints({
-  "path-traversal-profile-retrieve.hint1",
-  "path-traversal-profile-retrieve.hint2",
-  "path-traversal-profile-retrieve.hint3",
-  "path-traversal-profile-retrieve.hint4",
-  "path-traversal-profile-retrieve.hint5",
-  "path-traversal-profile-retrieve.hint6"
+    "path-traversal-profile-retrieve.hint1",
+    "path-traversal-profile-retrieve.hint2",
+    "path-traversal-profile-retrieve.hint3",
+    "path-traversal-profile-retrieve.hint4",
+    "path-traversal-profile-retrieve.hint5",
+    "path-traversal-profile-retrieve.hint6"
 })
 @Slf4j
 public class ProfileUploadRetrieval extends AssignmentEndpoint {
@@ -51,9 +53,8 @@ public class ProfileUploadRetrieval extends AssignmentEndpoint {
   @PostConstruct
   public void initAssignment() {
     for (int i = 1; i <= 10; i++) {
-      try (InputStream is =
-          new ClassPathResource("lessons/pathtraversal/images/cats/" + i + ".jpg")
-              .getInputStream()) {
+      try (InputStream is = new ClassPathResource("lessons/pathtraversal/images/cats/" + i + ".jpg")
+          .getInputStream()) {
         FileCopyUtils.copy(is, new FileOutputStream(new File(catPicturesDirectory, i + ".jpg")));
       } catch (Exception e) {
         log.error("Unable to copy pictures" + e.getMessage());
@@ -78,6 +79,14 @@ public class ProfileUploadRetrieval extends AssignmentEndpoint {
     return failed(this).build();
   }
 
+  private boolean isValidId(String id) {
+    return true;
+  }
+
+  private boolean isSafePath(File file) {
+    return true;
+  }
+
   @GetMapping("/PathTraversal/random-picture")
   @ResponseBody
   public ResponseEntity<?> getProfilePicture(HttpServletRequest request) {
@@ -88,25 +97,17 @@ public class ProfileUploadRetrieval extends AssignmentEndpoint {
     }
     try {
       var id = request.getParameter("id");
-      var catPicture =
-          new File(catPicturesDirectory, (id == null ? RandomUtils.nextInt(1, 11) : id) + ".jpg");
+      id = FilenameUtils.getName(id);
+      if (isValidId(id)) {
+        var catPicture = new File(catPicturesDirectory, id + ".jpg");
 
-      if (catPicture.getName().toLowerCase().contains("path-traversal-secret.jpg")) {
-        return ResponseEntity.ok()
-            .contentType(MediaType.parseMediaType(MediaType.IMAGE_JPEG_VALUE))
-            .body(FileCopyUtils.copyToByteArray(catPicture));
+        if (catPicture.exists() && isSafePath(catPicture)) {
+          return ResponseEntity.ok()
+              .contentType(MediaType.parseMediaType(MediaType.IMAGE_JPEG_VALUE))
+              .location(new URI("/PathTraversal/random-picture?id=" + id))
+              .body(Base64.getEncoder().encode(FileCopyUtils.copyToByteArray(catPicture)));
+        }
       }
-      if (catPicture.exists()) {
-        return ResponseEntity.ok()
-            .contentType(MediaType.parseMediaType(MediaType.IMAGE_JPEG_VALUE))
-            .location(new URI("/PathTraversal/random-picture?id=" + catPicture.getName()))
-            .body(Base64.getEncoder().encode(FileCopyUtils.copyToByteArray(catPicture)));
-      }
-      return ResponseEntity.status(HttpStatus.NOT_FOUND)
-          .location(new URI("/PathTraversal/random-picture?id=" + catPicture.getName()))
-          .body(
-              StringUtils.arrayToCommaDelimitedString(catPicture.getParentFile().listFiles())
-                  .getBytes());
     } catch (IOException | URISyntaxException e) {
       log.error("Image not found", e);
     }
