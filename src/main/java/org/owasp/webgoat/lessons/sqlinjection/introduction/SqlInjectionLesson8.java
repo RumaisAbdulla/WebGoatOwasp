@@ -22,9 +22,6 @@
 
 package org.owasp.webgoat.lessons.sqlinjection.introduction;
 
-import static java.sql.ResultSet.CONCUR_UPDATABLE;
-import static java.sql.ResultSet.TYPE_SCROLL_SENSITIVE;
-
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -62,8 +59,7 @@ public class SqlInjectionLesson8 extends AssignmentEndpoint {
 
   protected AttackResult injectableQueryConfidentiality(String name, String auth_tan) {
     StringBuilder output = new StringBuilder();
-    String query =
-        "SELECT * FROM employees WHERE last_name = ? AND auth_tan = ?";
+    String query = "SELECT * FROM employees WHERE last_name = ? AND auth_tan = ?";
     // String query =
     //     "SELECT * FROM employees WHERE last_name = '"
     //         + name
@@ -72,7 +68,7 @@ public class SqlInjectionLesson8 extends AssignmentEndpoint {
     //         + "'";
 
     try (Connection connection = dataSource.getConnection()) {
-      try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
+      try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
         // Statement statement =
         //     connection.createStatement(
         //         ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -164,15 +160,15 @@ public class SqlInjectionLesson8 extends AssignmentEndpoint {
       // statement = connection.createStatement(TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE);
       // statement.executeUpdate(logQuery);
       preparedStatement = connection.prepareStatement(logQuery);
-        preparedStatement.setString(1, time);
-        preparedStatement.setString(2, action);
-        preparedStatement.executeUpdate();
+      preparedStatement.setString(1, time);
+      preparedStatement.setString(2, action);
+      preparedStatement.executeUpdate();
     } catch (SQLException e) {
       System.err.println(e.getMessage());
     } finally {
-      if (preparedStatement  != null) {
+      if (preparedStatement != null) {
         try {
-          preparedStatement .close();
+          preparedStatement.close();
         } catch (SQLException e) {
           System.err.println("Error closing statement: " + e.getMessage());
         }

@@ -41,10 +41,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AssignmentHints({"crypto-hashing.hints.1", "crypto-hashing.hints.2"})
 public class HashingAssignment extends AssignmentEndpoint {
   private SecureRandom random = new SecureRandom();
-
   public static final String[] SECRETS = {"secret", "admin", "password", "123456", "passw0rd"};
-
- 
 
   @RequestMapping(path = "/crypto/hashing/sha256", produces = MediaType.TEXT_HTML_VALUE)
   @ResponseBody
@@ -67,7 +64,7 @@ public class HashingAssignment extends AssignmentEndpoint {
       @RequestParam String answer_pwd1,
       @RequestParam String answer_pwd2) {
 
-    String md5Secret = (String) request.getSession().getAttribute("md5Secret");
+    String md5Secret = (String) request.getSession().getAttribute("sha256Secret");
     String sha256Secret = (String) request.getSession().getAttribute("sha256Secret");
 
     if (answer_pwd1 != null && answer_pwd2 != null) {

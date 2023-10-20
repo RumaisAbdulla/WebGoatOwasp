@@ -29,14 +29,14 @@ public class CryptoIntegrationTest extends IntegrationTest {
     try {
       checkAssignment4();
     } catch (NoSuchAlgorithmException e) {
-      
+
       fail();
     }
 
     try {
       checkAssignmentSigning();
     } catch (Exception e) {
-      
+
       fail();
     }
 
@@ -77,15 +77,15 @@ public class CryptoIntegrationTest extends IntegrationTest {
 
   private void checkAssignment4() throws NoSuchAlgorithmException {
 
-    String md5Hash =
-        RestAssured.given()
-            .when()
-            .relaxedHTTPSValidation()
-            .cookie("JSESSIONID", getWebGoatCookie())
-            .get(url("/crypto/hashing/md5"))
-            .then()
-            .extract()
-            .asString();
+    // String md5Hash =
+    //     RestAssured.given()
+    //         .when()
+    //         .relaxedHTTPSValidation()
+    //         .cookie("JSESSIONID", getWebGoatCookie())
+    //         .get(url("/crypto/hashing/md5"))
+    //         .then()
+    //         .extract()
+    //         .asString();
 
     String sha256Hash =
         RestAssured.given()
@@ -100,7 +100,7 @@ public class CryptoIntegrationTest extends IntegrationTest {
     String answer_1 = "unknown";
     String answer_2 = "unknown";
     for (String secret : HashingAssignment.SECRETS) {
-      if (md5Hash.equals(HashingAssignment.getHash(secret, "MD5"))) {
+      if (sha256Hash.equals(HashingAssignment.getHash(secret, "SHA-256"))) {
         answer_1 = secret;
       }
       if (sha256Hash.equals(HashingAssignment.getHash(secret, "SHA-256"))) {

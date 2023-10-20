@@ -74,10 +74,11 @@ public class SqlInjectionLesson9 extends AssignmentEndpoint {
     //         + "'";
     try (Connection connection = dataSource.getConnection()) {
       String query = "SELECT * FROM employees WHERE last_name = ? AND auth_tan = ?";
-      try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
+      try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
         preparedStatement.setString(1, name);
         preparedStatement.setString(2, auth_tan);
-        // Statement statement = connection.createStatement(TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE);
+        // Statement statement = connection.createStatement(TYPE_SCROLL_SENSITIVE,
+        // CONCUR_UPDATABLE);
         SqlInjectionLesson8.log(connection, query);
         ResultSet results = preparedStatement.executeQuery();
         // ResultSet results = statement.executeQuery(query)

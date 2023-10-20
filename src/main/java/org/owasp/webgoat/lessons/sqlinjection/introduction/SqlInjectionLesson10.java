@@ -66,8 +66,8 @@ public class SqlInjectionLesson10 extends AssignmentEndpoint {
     // String query = "SELECT * FROM access_log WHERE action LIKE '%" + action + "%'";
 
     try (Connection connection = dataSource.getConnection()) {
-      try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
-        preparedStatement.setString(1, "%" + action + "%");  
+      try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        preparedStatement.setString(1, "%" + action + "%");
         ResultSet results = preparedStatement.executeQuery();
 
         if (results.getStatement() != null) {
