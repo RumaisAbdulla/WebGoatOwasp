@@ -68,11 +68,11 @@ public class Servers {
     List<Server> servers = new ArrayList<>();
 
     try (var connection = dataSource.getConnection()) {
+      String query = "SELECT id, hostname, ip, mac, status, description FROM SERVERS WHERE status <> 'out of order' ORDER BY ?";
       try (var statement =
           connection.prepareStatement(
-              "select id, hostname, ip, mac, status, description from SERVERS where status <> 'out"
-                  + " of order' order by "
-                  + column)) {
+              query)) {
+                statement.setString(1, column);
         try (var rs = statement.executeQuery()) {
           while (rs.next()) {
             Server server =
