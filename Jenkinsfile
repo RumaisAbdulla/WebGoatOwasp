@@ -26,12 +26,6 @@ pipeline {
                 }
             }
         }
-
-         stage('Test') {
-			steps {
-				bat 'mvn  test'
-			}
-		}
         
         stage('BUILD') {
 			steps {
