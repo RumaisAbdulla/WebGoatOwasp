@@ -130,6 +130,7 @@ public class JWTVotesEndpoint extends AssignmentEndpoint {
       Cookie cookie = new Cookie("access_token", token);
       cookie.setHttpOnly(true);
       cookie.setSecure(true);
+      response.setHeader("Set-Cookie", "key=value; HttpOnly; Secure; SameSite=Strict");
       response.addCookie(cookie);
       response.setStatus(HttpStatus.OK.value());
       response.setContentType(MediaType.APPLICATION_JSON_VALUE);
@@ -137,6 +138,7 @@ public class JWTVotesEndpoint extends AssignmentEndpoint {
       Cookie cookie = new Cookie("access_token", "");
       cookie.setHttpOnly(true);
       cookie.setSecure(true);
+      response.setHeader("Set-Cookie", "key=value; HttpOnly; Secure; SameSite=Strict");
       response.addCookie(cookie);
       response.setStatus(HttpStatus.UNAUTHORIZED.value());
       response.setContentType(MediaType.APPLICATION_JSON_VALUE);

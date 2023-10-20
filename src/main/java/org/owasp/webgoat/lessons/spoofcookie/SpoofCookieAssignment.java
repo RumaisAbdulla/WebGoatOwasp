@@ -77,6 +77,7 @@ public class SpoofCookieAssignment extends AssignmentEndpoint {
     cookie.setMaxAge(0);
     cookie.setSecure(true);
     cookie.setHttpOnly(true);
+    response.setHeader("Set-Cookie", "key=value; HttpOnly; Secure; SameSite=Strict");
     response.addCookie(cookie);
   }
 
@@ -95,6 +96,7 @@ public class SpoofCookieAssignment extends AssignmentEndpoint {
       newCookie.setPath("/WebGoat");
       newCookie.setSecure(true);
       newCookie.setHttpOnly(true);
+      response.setHeader("Set-Cookie", "key=value; HttpOnly; Secure; SameSite=Strict");
       response.addCookie(newCookie);
       return informationMessage(this)
           .feedback("spoofcookie.login")

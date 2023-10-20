@@ -1,4 +1,5 @@
 FROM openjdk:8-jdk-alpine
+USER myuser
 VOLUME /tmp
 ARG JAVA_OPTS
 ENV JAVA_OPTS=$JAVA_OPTS
