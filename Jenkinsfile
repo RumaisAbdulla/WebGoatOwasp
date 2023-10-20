@@ -27,17 +27,11 @@ pipeline {
             }
         }
         
-        // stage('TEST') {
-		// 	steps {
-		// 		bat 'mvn clean package'
-		// 	}
-		// }
-
-        // stage('BUILD') {
-		// 	steps {
-		// 		bat 'mvn clean install -DskipTests=true'
-		// 	}
-		// }
+        stage('BUILD') {
+			steps {
+				bat 'mvn clean install -DskipTests=true'
+			}
+		}
              
     }
 }
