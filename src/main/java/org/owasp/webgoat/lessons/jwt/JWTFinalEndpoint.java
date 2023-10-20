@@ -29,7 +29,6 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SigningKeyResolverAdapter;
 import io.jsonwebtoken.impl.TextCodec;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -87,7 +86,7 @@ public class JWTFinalEndpoint extends AssignmentEndpoint {
                         try (var connection = dataSource.getConnection()) {
                           String query = "SELECT key FROM jwt_keys WHERE id = ?";
                           PreparedStatement preparedstatement = connection.prepareStatement(query);
-                          preparedstatement.setString(1, kid); 
+                          preparedstatement.setString(1, kid);
                           ResultSet rs = preparedstatement.executeQuery();
                           while (rs.next()) {
                             return TextCodec.BASE64.decode(rs.getString(1));

@@ -11,20 +11,16 @@ import java.util.Base64;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.RandomUtils;
 import org.owasp.webgoat.container.assignments.AssignmentEndpoint;
 import org.owasp.webgoat.container.assignments.AssignmentHints;
 import org.owasp.webgoat.container.assignments.AttackResult;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.token.Sha512DigestUtils;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,12 +29,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AssignmentHints({
-    "path-traversal-profile-retrieve.hint1",
-    "path-traversal-profile-retrieve.hint2",
-    "path-traversal-profile-retrieve.hint3",
-    "path-traversal-profile-retrieve.hint4",
-    "path-traversal-profile-retrieve.hint5",
-    "path-traversal-profile-retrieve.hint6"
+  "path-traversal-profile-retrieve.hint1",
+  "path-traversal-profile-retrieve.hint2",
+  "path-traversal-profile-retrieve.hint3",
+  "path-traversal-profile-retrieve.hint4",
+  "path-traversal-profile-retrieve.hint5",
+  "path-traversal-profile-retrieve.hint6"
 })
 @Slf4j
 public class ProfileUploadRetrieval extends AssignmentEndpoint {
@@ -53,8 +49,9 @@ public class ProfileUploadRetrieval extends AssignmentEndpoint {
   @PostConstruct
   public void initAssignment() {
     for (int i = 1; i <= 10; i++) {
-      try (InputStream is = new ClassPathResource("lessons/pathtraversal/images/cats/" + i + ".jpg")
-          .getInputStream()) {
+      try (InputStream is =
+          new ClassPathResource("lessons/pathtraversal/images/cats/" + i + ".jpg")
+              .getInputStream()) {
         FileCopyUtils.copy(is, new FileOutputStream(new File(catPicturesDirectory, i + ".jpg")));
       } catch (Exception e) {
         log.error("Unable to copy pictures" + e.getMessage());
