@@ -397,6 +397,16 @@
       <artifactId>rest-assured</artifactId>
       <scope>test</scope>
     </dependency>
+      <dependency>
+        <groupId>org.owasp.encoder</groupId>
+        <artifactId>encoder</artifactId>
+        <version>1.2.3</version>
+      </dependency>
+      <dependency>
+        <groupId>org.owasp.encoder</groupId>
+        <artifactId>encoder-jsp</artifactId>
+        <version>1.2.3</version>
+      </dependency>
   </dependencies>
 
   <repositories>

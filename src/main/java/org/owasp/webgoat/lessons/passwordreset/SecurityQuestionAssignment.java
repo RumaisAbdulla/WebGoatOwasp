@@ -35,6 +35,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.HtmlUtils;
 
+import io.undertow.util.FlexBase64.Encoder;
+
+import org.owasp.encoder.Encode;
+import org.owasp.encoder.Encoders;
+
 /**
  * Assignment for picking a good security question.
  *
@@ -98,7 +103,7 @@ public class SecurityQuestionAssignment extends AssignmentEndpoint {
     if (answer.isPresent()) {
       triedQuestions.incr(question);
       if (triedQuestions.isComplete()) {
-        String escapedAnswer = HtmlUtils.htmlEscape(answer.get());
+        String escapedAnswer = Encode.forHtml(answer.get());
         return success(this).output("<b>" + escapedAnswer + "</b>").build();
       }
     }
