@@ -98,7 +98,7 @@ public class SecurityQuestionAssignment extends AssignmentEndpoint {
     if (answer.isPresent()) {
       triedQuestions.incr(question);
       if (triedQuestions.isComplete()) {
-        String escapedAnswer = HtmlUtils.htmlEscape(questions.get(question));
+        String escapedAnswer = HtmlUtils.htmlEscape(answer.get());
         return success(this).output("<b>" + escapedAnswer + "</b>").build();
       }
     }
