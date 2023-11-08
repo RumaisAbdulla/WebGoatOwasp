@@ -9,12 +9,12 @@ pipeline {
 			}
 		}
         
-		// stage('OWASP DEPENDENCY CHECK') {
-		// 	steps {
-		// 		dependencyCheck additionalArguments:  '--scan ./', odcInstallation: 'dependency-check'
-		// 		dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-		// 	}
-		// }       
+		stage('OWASP DEPENDENCY CHECK') {
+			steps {
+				dependencyCheck additionalArguments:  '--scan ./', odcInstallation: 'dependency-check'
+				dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+			}
+		}       
         
         stage('SAST-SONARQUBE') {
             steps{
