@@ -11,7 +11,7 @@ pipeline {
         
 		stage('OWASP DEPENDENCY CHECK') {
 			steps {
-				dependencyCheck additionalArguments:  '--scan ./', odcInstallation: 'dependency-check'
+				dependencyCheck additionalArguments:  '--scan ./', odcInstallation: 'owaspdc'
 				dependencyCheckPublisher pattern: 'dependency-check-report.xml'
 			}
 		}       
@@ -19,7 +19,7 @@ pipeline {
         stage('SAST-SONARQUBE') {
             steps{
                 script{
-					def scannerHome = tool 'sonar-local';
+					def scannerHome = tool 'sonarscanner';
 					withSonarQubeEnv() {
 						bat "${scannerHome}/bin/sonar-scanner -Dsonar.projectName=Webgoat -Dsonar.projectKey=WebgoatLast -Dsonar.java.binaries=target/classes"
 					}
